@@ -41,7 +41,7 @@ public class HomePageController {
         File qrCodeFile = null;
         do {
             qrCodeFile = UniqueFileFactory.createUniqueFile(
-                    imagesDirectoryPath, "qrcode-", ".png");
+                    imagesDirectoryPath, "/qrcode-", "");
         } while (qrCodeFile.exists());
         if (!qrCodeFile.createNewFile()) {
             throw new IOException("cannot create temporary file");
