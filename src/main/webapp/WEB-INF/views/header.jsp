@@ -1,0 +1,1 @@
+<a href="/"><h1>QR Generator & Recognizer</h1></a>
