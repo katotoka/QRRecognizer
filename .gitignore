@@ -1,0 +1,8 @@
+# Eclipse shit
+.classpath
+.project
+.settings/*
+.springBeans
+target/*
+config/*\.properties
+/target
