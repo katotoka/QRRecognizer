@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class HomePageController {
 
-    @Value("${qrrecognizer.imagesDirectoryPath}")
+    @Value("${qrrecognizer.uploadPath}")
     private String imagesDirectoryPath;
 
     @Autowired
