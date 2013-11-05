@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class HomePageController {
 
-    @Value("#{ systemProperties['imagesDirectoryPath'] }")
+    @Value("${qrrecognizer.imagesDirectoryPath}")
     private String imagesDirectoryPath;
 
     @Autowired
