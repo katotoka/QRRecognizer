@@ -8,7 +8,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
     <context:annotation-config />
     <context:component-scan base-package="net.problemteam.qrrecognizer"/>
-   
+    
     <context:property-placeholder location="file:///${configDir}/configuration.properties"/>
-
+    
 </beans>
