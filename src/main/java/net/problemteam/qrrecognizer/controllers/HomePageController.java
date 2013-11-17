@@ -7,6 +7,7 @@ import net.problemteam.qrrecognizer.services.GeneratorService;
 import net.problemteam.qrrecognizer.services.RecognizerService;
 import net.problemteam.qrrecognizer.util.UniqueFileFactory;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class HomePageController {
+    private static final Logger log = Logger
+                    .getLogger(HomePageController.class);
 
     @Value("${qrrecognizer.uploadPath}")
     private String imagesDirectoryPath;
+
+    @Value("${qrrecognizer.generatedImagesPath}")
+    private String generatedImagesPath;
 
     @Autowired
     private RecognizerService recognizerService;
@@ -34,14 +40,14 @@ public class HomePageController {
     }
 
     @RequestMapping(value = "/decode", method = RequestMethod.POST)
-    public String qrDecode(@RequestParam("fileToDecode")
-    MultipartFile fileToDecode, Model model) throws IllegalStateException,
-            IOException {
+    public String qrDecode(
+                    @RequestParam("fileToDecode") MultipartFile fileToDecode,
+                    Model model) throws Exception {
 
         File qrCodeFile = null;
         do {
             qrCodeFile = UniqueFileFactory.createUniqueFile(
-                    imagesDirectoryPath, "/qrcode-", "");
+                            imagesDirectoryPath, "/qrcode-", "");
         } while (qrCodeFile.exists());
         if (!qrCodeFile.createNewFile()) {
             throw new IOException("cannot create temporary file");
@@ -51,19 +57,24 @@ public class HomePageController {
 
         String decodedText = recognizerService.recognizeQrCode(qrCodeFile);
 
+        if (!qrCodeFile.delete()) {
+            log.error("Temporary file " + qrCodeFile.getAbsolutePath()
+                            + " has not been deleted.");
+        }
+
         model.addAttribute("decodedText", decodedText);
         return "decoded_text";
     }
 
     @RequestMapping(value = "/encode", method = RequestMethod.POST)
-    public String qrEncode(@RequestParam("textToEncode")
-    String textToEncode, Model model) throws IOException {
+    public String qrEncode(@RequestParam("textToEncode") String textToEncode,
+                    Model model) throws Exception {
 
         File encodedImageFile = this.generatorService
-                .generateQrCode(textToEncode);
+                        .generateQrCode(textToEncode);
 
         model.addAttribute("encodedImagePath",
-                encodedImageFile.getCanonicalPath());
+                        "/generated/" + encodedImageFile.getName());
         return "encoded_image";
     }
 }
