@@ -4,6 +4,6 @@ import java.io.File;
 
 public interface RecognizerService {
 
-    String recognizeQrCode(File qrCodePath);
+    String recognizeQrCode(File qrCodePath) throws Exception;
 
 }

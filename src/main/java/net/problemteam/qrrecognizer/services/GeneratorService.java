@@ -4,6 +4,6 @@ import java.io.File;
 
 public interface GeneratorService {
 
-    File generateQrCode(String qrCode);
+    File generateQrCode(String qrCode) throws Exception;
 
 }

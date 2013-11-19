@@ -1,1 +1,1 @@
-<a href="/"><h1>QR Generator & Recognizer</h1></a>
+<a href="<c:url value='/'/>"><h1>QR Generator & Recognizer</h1></a>
