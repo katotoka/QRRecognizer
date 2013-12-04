@@ -34,8 +34,12 @@ public class HomePageController {
     @Autowired
     private GeneratorService generatorService;
 
+	/**
+	* Returns home page view.
+	* @return home page view name.
+	*/
     @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-    public String homePage(Model model) throws IOException {
+    public String homePage() {
         return "index";
     }
 
